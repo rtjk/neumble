@@ -20,15 +20,32 @@
 }
 .c {
   border: 10px solid pink;
-  width: 95%;
+  width: 30%;
   height: 100px;
   position: absolute;
   top: 50%;
-  left: 0%;
+  left: 15%;
   transform: translate(-50%, -50%);
 }
-#d {
+#c2 {
   top: 50%;
-  left: 100%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#c3 {
+  top: 50%;
+  left: 85%;
+  transform: translate(-50%, -50%);
+}
+#g {
+  position: absolute;
+  top: 90%;
+  left: 10%;
+  transform: translate(-50%, -50%);
+}
+#r {
+  position: absolute;
+  top: 90%;
+  left: 15%;
   transform: translate(-50%, -50%);
 }
