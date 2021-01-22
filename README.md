@@ -6,4 +6,4 @@ This is an ongoing project I started after taking [Fundamentals of Neuroscience]
 
 A demo is available here:
 
-https://codepen.io/rtjk/pen/XWjONRg
+https://bit.ly/neumble-demo
