@@ -14,6 +14,8 @@ let lm = {
 };
 
 let g = false;
+let s = false;
+let upwhite = 0;
 
 const rmElement = document.getElementById("c2");
 let rmBounds = rmElement.getBoundingClientRect();
@@ -44,7 +46,7 @@ class Particle {
     this.ix = Math.random() * canvas.width;
     this.iy = Math.random() * canvas.height;
     /*
-    console.log(this.ix + " " + + this.radius + " " + box.x)    
+    console.log(this.ix + " " + + this.radius + " " + box.x) 
     */
     do {
       this.ix = Math.random() * canvas.width;
@@ -58,6 +60,8 @@ class Particle {
 
     this.color = "white";
     if (this.iy > 0.5 * canvas.height) this.color = "green";
+
+    this.upwhitestatus = true;
   }
   draw() {
     ctx.fillStyle = this.color;
@@ -69,29 +73,51 @@ class Particle {
     ctx.stroke();
   }
   update() {
-    this.x += this.speedX;
-    this.y += this.speedY;
-    if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
-      this.speedX = -this.speedX;
-    }
-    if (this.y + this.radius > canvas.height || this.y + this.radius < 0) {
-      this.speedY = -this.speedY;
-    }
-    if (collision(this.x, this.y, this.radius)) {
-      this.speedX = -this.speedX;
-      this.speedY = -this.speedY;
-    }
+    if (!s) {
+      this.x += this.speedX;
+      this.y += this.speedY;
+      if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
+        this.speedX = -this.speedX;
+      }
+      if (this.y + this.radius > canvas.height || this.y + this.radius < 0) {
+        this.speedY = -this.speedY;
+      }
+      if (collision(this.x, this.y, this.radius)) {
+        this.speedX = -this.speedX;
+        this.speedY = -this.speedY;
+      }
 
-    if (this.color == "green" && g) {
-      this.color = "red";
-      this.speedX *= 5;
-      this.speedY *= 5;
-    }
+      if (this.color == "green" && g) {
+        this.color = "red";
+        this.speedX *= 5;
+        this.speedY *= 5;
+      }
 
-    if (this.color == "red" && !g) {
-      this.color = "green";
-      this.speedX /= 5;
-      this.speedY /= 5;
+      if (this.color == "red" && !g) {
+        this.color = "green";
+        this.speedX /= 5;
+        this.speedY /= 5;
+      }
+
+      if (
+        this.y < 0.5 * canvas.height &&
+        this.color == "white" &&
+        !this.upwhitestatus
+      ) {
+        this.upwhitestatus = !this.upwhitestatus;
+        upwhite++;
+      }
+
+      if (
+        this.y >= 0.5 * canvas.height &&
+        this.color == "white" &&
+        this.upwhitestatus
+      ) {
+        this.upwhitestatus = !this.upwhitestatus;
+        upwhite--;
+      }
+
+      document.getElementById("u").innerHTML = upwhite;
     }
 
     this.draw();
@@ -121,14 +147,23 @@ window.addEventListener("resize", function () {
 
 document.getElementById("g").onclick = changeWeight;
 document.getElementById("r").onclick = reset;
+document.getElementById("s").onclick = stop;
+document.getElementById("u").onclick = stop;
 
 function changeWeight() {
   g = !g;
 }
 
+function stop() {
+  s = !s;
+}
+
 function reset() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
+  g = false;
+  s = false;
+  upwhite = 0;
   particlesArray = [];
   init();
 }

@@ -49,3 +49,16 @@
   left: 15%;
   transform: translate(-50%, -50%);
 }
+#s {
+  position: absolute;
+  top: 90%;
+  left: 5%;
+  transform: translate(-50%, -50%);
+}
+
+#u {
+  position: absolute;
+  top: 90%;
+  left: 20%;
+  transform: translate(-50%, -50%);
+}
